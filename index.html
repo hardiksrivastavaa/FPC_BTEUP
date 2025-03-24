@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTEUP Marksheet Generator</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- jsPDF AutoTable Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+</head>
+
+<body class="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex justify-center items-center my-6">
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl p-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 flex items-center justify-center">
+            BTEUP Final Marksheet Calculator
+        </h1>
+
+        <form class="space-y-6">
+            <!-- Personal Details Section -->
+            <fieldset class="border border-gray-300 p-5 rounded-lg bg-gray-100">
+                <legend class="text-lg font-semibold text-gray-800">
+                    Personal Details
+                </legend>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-3 text-gray-500"></i>
+                        <input type="text" id="studentName" placeholder="Student Name" required
+                            class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="relative">
+                        <i class="fas fa-code-branch absolute left-3 top-3 text-gray-500"></i>
+                        <input type="text" id="branchName" placeholder="Branch Name" required
+                            class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="relative">
+                        <i class="fas fa-id-card absolute left-3 top-3 text-gray-500"></i>
+                        <input type="text" id="enrollmentNumber" placeholder="Enrollment Number" required
+                            class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="relative">
+                        <i class="fas fa-university absolute left-3 top-3 text-gray-500"></i>
+                        <input type="text" id="collegeName" placeholder="College Name" required
+                            class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Marks Section -->
+            <fieldset class="border border-gray-300 p-5 rounded-lg bg-gray-100">
+                <legend class="text-lg font-semibold text-gray-800">Marks</legend>
+
+                <div class="space-y-5 mt-4">
+                    <div>
+                        <h3 class="text-md font-semibold text-gray-700">1st Year</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="number" id="obtained1" placeholder="Obtained Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total1" placeholder="Total Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-md font-semibold text-gray-700">2nd Year</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="number" id="obtained2" placeholder="Obtained Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total2" placeholder="Total Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-md font-semibold text-gray-700">5th Semester</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="number" id="obtained5" placeholder="Obtained Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total5" placeholder="Total Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-md font-semibold text-gray-700">6th Semester</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="number" id="obtained6" placeholder="Obtained Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total6" placeholder="Total Marks" required
+                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <button id="submit"
+                class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-md font-bold text-lg hover:shadow-lg transition hover:scale-105">
+                Calculate Percentage
+            </button>
+        </form>
+
+        <!-- Footer - About Dev -->
+
+        <div class="text-center mt-6 text-dark">
+            <p class="text-sm">
+                &copy; 2025 Developed with ❤️ by
+                <span class="font-bold">Hardik Srivastava</span>
+            </p>
+            <div class="flex justify-center space-x-4 mt-2">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/hardiksrivastavaaa" target="_blank"
+                    class="text-black text-lg hover:text-blue-800">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/hardiksrivastavaa" target="_blank"
+                    class="text-black text-lg hover:text-blue-800">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com/hardiksrivastavaa" target="_blank"
+                    class="text-black text-lg hover:text-blue-800">
+                    <i class="fab fa-github"></i>
+                </a>
+                <!-- Twitter -->
+                <a href="https://x.com/hardikfgp" target="_blank" class="text-black text-lg hover:text-blue-800">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <div id="modalContent" class="text-gray-800"></div>
+            <div class="flex justify-between mt-4">
+                <button id="downloadPdf" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Download PDF
+                </button>
+                <button id="closeModal" class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript (should be at the end) -->
+    <script src="script.js"></script>
+</body>
+
+</html>
