@@ -2,28 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.querySelector("#closeModal");
     const downloadPdfBtn = document.querySelector("#downloadPdf");
     const resultModal = document.querySelector("#resultModal");
-    const submitBtn = document.querySelector("#submit");
+    const form = document.querySelector("#marksheetForm");
 
-    if (!closeModalBtn || !downloadPdfBtn || !resultModal || !submitBtn) {
-        console.error("One or more modal elements are missing!");
-        return;
-    }
+    form.addEventListener("submit", getPercentages);
 
-    submitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        const form = document.querySelector("#marksheetForm");
-        if (form.checkValidity()) {
-            getPercentages();
-        } else {
-            form.reportValidity();
-        }
-    });
+    // Helper Function to Calculate the Percentage
 
     function calculatePercentage(obtained, total) {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
 
-    function getPercentages() {
+    // Function to get Percentages
+
+    function getPercentages(e) {
+
+        e.preventDefault();
+
         const studentName = document.querySelector("#studentName").value;
         const branchName = document.querySelector("#branchName").value;
         const enrollmentNumber = document.querySelector("#enrollmentNumber").value;
@@ -31,32 +25,50 @@ document.addEventListener("DOMContentLoaded", function () {
         const error = document.querySelector("#error");
 
 
-        const obtained1 = parseInt(document.querySelector("#obtained1").value) || 0;
-        const total1 = parseInt(document.querySelector("#total1").value) || 1;
-        const obtained2 = parseInt(document.querySelector("#obtained2").value) || 0;
-        const total2 = parseInt(document.querySelector("#total2").value) || 1;
-        const obtained5 = parseInt(document.querySelector("#obtained5").value) || 0;
-        const total5 = parseInt(document.querySelector("#total5").value) || 1;
-        const obtained6 = parseInt(document.querySelector("#obtained6").value) || 0;
-        const total6 = parseInt(document.querySelector("#total6").value) || 1;
+        const obtained1 = parseInt(document.querySelector("#obtained1").value);
+        const total1 = parseInt(document.querySelector("#total1").value);
+        const obtained2 = parseInt(document.querySelector("#obtained2").value);
+        const total2 = parseInt(document.querySelector("#total2").value);
+        const obtained5 = parseInt(document.querySelector("#obtained5").value);
+        const total5 = parseInt(document.querySelector("#total5").value);
+        const obtained6 = parseInt(document.querySelector("#obtained6").value);
+        const total6 = parseInt(document.querySelector("#total6").value);
 
         // Clear previous error messages
         error.textContent = "";
 
-
+        // Check if Entrollment Number is less than 15 digits.
         if (enrollmentNumber.length < 15) {
             error.textContent = "Enrollment Number must be 15 digits long.";
             return;
-        } else if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
+        }
+
+        // Check if obtained marks are greater than total marks
+        if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
             error.textContent = "Obtained marks cannot be greater than total marks!";
             return;
-        } else if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
+        }
+
+        // Check if total marks are less than the minimum required
+        if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
             error.textContent = "Total marks cannot be less than 500!";
             return;
-        } else if (total1 > 2000 || total2 > 2000) {
+        }
+
+        // Check if 1st and 2nd year total marks exceed the allowed limit
+        if (total1 < 1000 || total2 < 1000) {
+            error.textContent = "Ist/IInd Year Total Marks cannot be less than 1000!";
+            return;
+        }
+
+        // Check if 1st and 2nd year total marks exceed the allowed limit
+        if (total1 > 2000 || total2 > 2000) {
             error.textContent = "Ist/IInd Year Total Marks cannot be greater than 2000!";
             return;
-        } else if (total5 > 1100 || total6 > 1100) {
+        }
+
+        // Check if 5th and 6th semester total marks exceed the allowed limit
+        if (total5 > 1100 || total6 > 1100) {
             error.textContent = "5th/6th Semester Total marks cannot be greater than 1100!";
             return;
         }
@@ -159,20 +171,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 doc.setTextColor(d.finalResult === "PASSED" ? "green" : "red");
                 doc.text(`Final Result : ${d.finalResult} with ${d.cumulativePercentage}%`, 55, 240);
 
-
-
-
-
-                // 📌 Add Bullet Points
+                // Added Important Points
                 doc.setTextColor("red");
                 doc.setFontSize(12);
                 doc.text("1. The final percentage is calculated as Per Board Rules.", 15, 262);
                 doc.text("2. 1st Year : 30% | 2nd Year : 70% | Final Year : 100%", 15, 269);
                 doc.text("3. This is Not an official Marksheet.", 15, 276);
                 doc.text("4. This is for your reference and self-calculation purposes only.", 15, 283);
-
-
-                // doc.text("INTERNET GENERATED COPY", 65, 270);
 
                 doc.save(`${d.studentName} - Marksheet.pdf`);
             };

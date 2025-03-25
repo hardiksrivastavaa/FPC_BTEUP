@@ -37,9 +37,7 @@
             BTEUP<span class="text-xl font-bold mt-1 text-blue-800">Final Percentage Calculator</span>
         </h1>
 
-
         <form class="space-y-6" id="marksheetForm">
-
             <!-- Personal Details Section -->
             <fieldset class="border border-gray-300 p-5 rounded-2xl bg-gray-100">
                 <legend class="text-lg font-semibold text-gray-800">
@@ -76,7 +74,9 @@
 
             <!-- Marks Section -->
             <fieldset class="border border-gray-300 p-5 rounded-2xl bg-gray-100">
-                <legend class="text-lg font-semibold text-gray-800">Academic Score</legend>
+                <legend class="text-lg font-semibold text-gray-800">
+                    Academic Score
+                </legend>
 
                 <p class="text-bold text-xl text-red-800 text-center my-1" id="error"></p>
 
@@ -92,7 +92,7 @@
                     </div>
 
                     <div>
-                        <h3 class="text-md font-semibold text-gray-700">2nd Year</h3>
+                        <h3 class="text-md font-semibold text-gray-700 mb-2">2nd Year</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <input type="number" id="obtained2" placeholder="Obtained" name="Obtained2nd" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
@@ -102,7 +102,9 @@
                     </div>
 
                     <div>
-                        <h3 class="text-md font-semibold text-gray-700">5th Semester</h3>
+                        <h3 class="text-md font-semibold text-gray-700 mb-2">
+                            5th Semester
+                        </h3>
                         <div class="grid grid-cols-2 gap-4">
                             <input type="number" id="obtained5" placeholder="Obtained" name="Obtained5th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
@@ -112,7 +114,9 @@
                     </div>
 
                     <div>
-                        <h3 class="text-md font-semibold text-gray-700">6th Semester</h3>
+                        <h3 class="text-md font-semibold text-gray-700 mb-2">
+                            6th Semester
+                        </h3>
                         <div class="grid grid-cols-2 gap-4">
                             <input type="number" id="obtained6" placeholder="Obtained" name="Obtained6th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
@@ -124,7 +128,7 @@
             </fieldset>
 
             <!-- Submit Button -->
-            <button id="submit" type="submit"
+            <button type="submit"
                 class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-md font-bold text-lg hover:shadow-lg transition hover:scale-105">
                 Calculate Percentage
             </button>
@@ -158,7 +162,6 @@
                 </a>
             </div>
         </div>
-
     </div>
 
     <!-- Result Modal -->
