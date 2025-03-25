@@ -15,7 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function calculatePercentage(obtained, total) {
-        return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
+        if (total > obtained) {
+            return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);            
+        } else {
+            alert("Obtained marks cannot be greater than total marks!");
+            return "0.00";
+        }
     }
 
     function getPercentages() {
