@@ -39,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const obtained6 = parseInt(document.querySelector("#obtained6").value) || 0;
         const total6 = parseInt(document.querySelector("#total6").value) || 1;
 
+        error.textContent = ""; // Clear previous error messages
+
         if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
             error.textContent = "Obtained marks cannot be greater than total marks!";
             return;
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             error.textContent = "Total marks cannot be less than 500!";
             return;
         }
+
 
         const firstYearPercentage = calculatePercentage(obtained1, total1);
         const secondYearPercentage = calculatePercentage(obtained2, total2);
