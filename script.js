@@ -11,16 +11,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     submitBtn.addEventListener("click", function (event) {
         event.preventDefault();
-        getPercentages();
+        const form = document.querySelector("#marksheetForm");
+        if (form.checkValidity()) {
+            getPercentages();
+        } else {
+            form.reportValidity();
+        }
     });
 
     function calculatePercentage(obtained, total) {
-        if (total > obtained) {
             return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);            
-        } else {
-            alert("Obtained marks cannot be greater than total marks!");
-            return "0.00";
-        }
     }
 
     function getPercentages() {
@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const total5 = parseInt(document.querySelector("#total5").value) || 1;
         const obtained6 = parseInt(document.querySelector("#obtained6").value) || 0;
         const total6 = parseInt(document.querySelector("#total6").value) || 1;
+
+        if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
+            alert("Obtained marks cannot be greater than total marks!");
+            return;
+        }
 
         const firstYearPercentage = calculatePercentage(obtained1, total1);
         const secondYearPercentage = calculatePercentage(obtained2, total2);
