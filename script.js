@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const branchName = document.querySelector("#branchName").value;
         const enrollmentNumber = document.querySelector("#enrollmentNumber").value;
         const collegeName = document.querySelector("#collegeName").value;
-        const error1 = document.querySelector("#error1");
-        const error2 = document.querySelector("#error2");
+        const error = document.querySelector("#error");
 
 
         const obtained1 = parseInt(document.querySelector("#obtained1").value) || 0;
@@ -42,23 +41,23 @@ document.addEventListener("DOMContentLoaded", function () {
         const total6 = parseInt(document.querySelector("#total6").value) || 1;
 
         // Clear previous error messages
-        error1.textContent = "";
-        error2.textContent = "";
+        error.textContent = "";
+
 
         if (enrollmentNumber.length < 15) {
-            error1.textContent = "Enrollment Number is too short. It must be 15 digits long.";
+            error.textContent = "Enrollment Number must be 15 digits.";
             return;
         } else if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
-            error2.textContent = "Obtained marks cannot be greater than total marks!";
+            error.textContent = "Obtained marks cannot be greater than total marks!";
             return;
         } else if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
-            error2.textContent = "Total marks cannot be less than 500!";
+            error.textContent = "Total marks cannot be less than 500!";
             return;
         } else if (total1 > 2000 || total2 > 2000) {
-            error2.textContent = "Ist/IInd Year Total Marks cannot be greater than 2000!";
+            error.textContent = "Ist/IInd Year Total Marks cannot be greater than 2000!";
             return;
         } else if (total5 > 1100 || total6 > 1100) {
-            error2.textContent = "5th/6th Semester Total marks cannot be greater than 1100!";
+            error.textContent = "5th/6th Semester Total marks cannot be greater than 1100!";
             return;
         }
 
