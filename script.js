@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function calculatePercentage(obtained, total) {
-            return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);            
+        return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
 
     function getPercentages() {
@@ -44,13 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
             error.textContent = "Obtained marks cannot be greater than total marks!";
             return;
-        }
-
-        if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
+        } else if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
             error.textContent = "Total marks cannot be less than 500!";
             return;
+        } else if (total1 > 2000 || total2 > 2000) {
+            error.textContent = "Ist/IInd Year Total Marks cannot be greater than 2000!";
+            return;
+        } else if (total5 > 1100 || total5 > 1100) {
+            error.textContent = "5th/6th Semester Total marks cannot be greater than 1100!";
+            return;
         }
-
 
         const firstYearPercentage = calculatePercentage(obtained1, total1);
         const secondYearPercentage = calculatePercentage(obtained2, total2);
