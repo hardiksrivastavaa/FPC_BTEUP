@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.querySelector("#closeModal");
     const downloadPdfBtn = document.querySelector("#downloadPdf");
     const resultModal = document.querySelector("#resultModal");
-    const form = document.querySelector("#marksheetForm");
+    let form = document.querySelector("#marksheetForm");
 
     form.addEventListener("submit", getPercentages);
 
@@ -79,11 +79,30 @@ document.addEventListener("DOMContentLoaded", function () {
         const thirdYearTotal = total5 + total6;
         const thirdYearPercentage = calculatePercentage(thirdYearObtained, thirdYearTotal);
 
-        const cumulativeObtained = Math.round((obtained1 * 0.3) + (obtained2 * 0.7) + thirdYearObtained);
-        const cumulativeTotal = Math.round((total1 * 0.3) + (total2 * 0.7) + thirdYearTotal);
-        const cumulativePercentage = calculatePercentage(cumulativeObtained, cumulativeTotal);
+        const FinalObtainedMarks = Math.round((obtained1 * 0.3) + (obtained2 * 0.7) + thirdYearObtained);
+        const FinalTotalMarks = Math.round((total1 * 0.3) + (total2 * 0.7) + thirdYearTotal);
+        const FinalPercentage = calculatePercentage(FinalObtainedMarks, FinalTotalMarks);
 
-        const finalResult = cumulativePercentage >= 40 ? "PASSED" : "FAILED";
+        // Determine grade and message based on final percentage
+        let grade = "";
+        let message = "";
+
+        if (FinalPercentage >= 60) {
+            grade = "First Division";
+            message = `Congratulations ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou achieved First Division. Great job!`;
+        } else if (FinalPercentage >= 45) {
+            grade = "Second Division";
+            message = `Well done ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou secured Second Division. Keep pushing forward!`;
+        } else if (FinalPercentage >= 33) {
+            grade = "Third Division";
+            message = `Good effort ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou passed with Third Division. Try to improve further!`;
+        } else {
+            grade = "Fail";
+            message = `Sorry ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou didn't pass. Stay strong and try again!`;
+        }
+
+
+        const finalResult = FinalPercentage >= 33 ? "PASSED" : "FAILED";
 
         document.querySelector("#modalContent").innerHTML = `
             <h2 class="text-xl font-bold">Marksheet Details</h2>
@@ -96,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>2nd Year Percentage:</strong> ${secondYearPercentage}%</p>
             <p><strong>3rd Year Percentage:</strong> ${thirdYearPercentage}%</p>
             <hr class="my-2">
-            <p><strong>Final Percentage:</strong> ${cumulativePercentage}%</p>
+            <p><strong>Final Percentage:</strong> ${FinalPercentage}%</p>
             <p class="text-lg font-bold mt-2 ${finalResult === 'PASSED' ? 'text-green-600' : 'text-red-600'}">
                 Final Result: ${finalResult}
             </p>
@@ -110,13 +129,14 @@ document.addEventListener("DOMContentLoaded", function () {
             obtained2, total2, secondYearPercentage,
             obtained5, total5, obtained6, total6,
             thirdYearObtained, thirdYearTotal, thirdYearPercentage,
-            cumulativeObtained, cumulativeTotal, cumulativePercentage,
-            finalResult
+            FinalObtainedMarks, FinalTotalMarks, FinalPercentage,
+            finalResult, grade, message
         };
     }
 
     closeModalBtn.addEventListener("click", function () {
         resultModal.classList.add("hidden");
+        form.reset();
     });
 
     downloadPdfBtn.addEventListener("click", function () {
@@ -143,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 doc.setFont("times", "bold");
                 doc.setFontSize(19);
-                doc.text("Marksheet Details", 75, 125);
+                doc.text("Marksheet", 80, 125);
 
                 const tableData = [
                     ["Year/Semester", "Obtained Marks", "Total Marks", "Percentage"],
@@ -152,37 +172,61 @@ document.addEventListener("DOMContentLoaded", function () {
                     ["5th Semester", d.obtained5, d.total5, calculatePercentage(d.obtained5, d.total5) + "%"],
                     ["6th Semester", d.obtained6, d.total6, calculatePercentage(d.obtained6, d.total6) + "%"],
                     ["3rd Year", d.thirdYearObtained, d.thirdYearTotal, d.thirdYearPercentage + "%"],
-                    ["Grand Total", d.cumulativeObtained, d.cumulativeTotal, d.cumulativePercentage + "%"],
+                    ["Grand Total", d.FinalObtainedMarks, d.FinalTotalMarks, d.FinalPercentage + "%"],
                 ];
+
 
                 doc.autoTable({
                     startY: 132,
-                    head: [tableData[0]],
+                    head: [[
+                        "Year/Semester", "Obtained Marks", "Total Marks", "Percentage"
+                    ]], // Ensure headers are in one line
                     body: tableData.slice(1),
                     theme: "grid",
-                    styles: { font: "times", fontSize: 15, cellPadding: 3, halign: "center" },
-                    headStyles: { fillColor: [41, 128, 185], textColor: [255, 255, 255], fontStyle: "bold" },
-                    alternateRowStyles: { fillColor: [230, 230, 230] },
+                    styles: {
+                        font: "times",
+                        fontSize: 15, // Standard readable font
+                        cellPadding: 3, // More padding for spacing
+                        halign: "center",
+                        lineColor: [44, 62, 80], // Dark gray border
+                        lineWidth: 0.2, // Thin borders
+                        cellWidth: "wrap", // Auto-wrap content
+                    },
+                    headStyles: {
+                        fillColor: [41, 128, 185],
+                        textColor: [255, 255, 255],
+                        fontStyle: "bold",
+                        fontSize: 15, // Make header distinct
+                        halign: "center",
+                    },
+                    alternateRowStyles: {
+                        fillColor: [230, 230, 230],
+                    },
                     margin: { top: 30 },
                     tableWidth: "auto",
                 });
 
-                doc.setFontSize(18);
-                doc.setTextColor(d.finalResult === "PASSED" ? "green" : "red");
-                doc.text(`Final Result : ${d.finalResult} with ${d.cumulativePercentage}%`, 55, 240);
+                doc.setFontSize(16);
+                doc.setTextColor(d.FinalPercentage >= 33 ? "green" : "red");
+                doc.setLineHeightFactor(1.4); // Ensures proper spacing
 
-                // Added Important Points
+                // Print the personalized message with proper alignment
+                doc.text(d.message, 20, 227);
+
+                //Added Important Points
                 doc.setTextColor("red");
                 doc.setFontSize(12);
-                doc.text("1. The final percentage is calculated as Per Board Rules.", 15, 262);
-                doc.text("2. 1st Year : 30% | 2nd Year : 70% | Final Year : 100%", 15, 269);
-                doc.text("3. This is Not an official Marksheet.", 15, 276);
-                doc.text("4. This is for your reference and self-calculation purposes only.", 15, 283);
+                doc.text("Note : ", 15, 257);
+                doc.text("1. The Final percentage is Calculated as Per BTEUP Board rules.", 15, 264);
+                doc.text("2. Weightage : 1st Year - 30% | 2nd Year - 70% | 3rd Year - 100%.", 15, 271);
+                doc.text("3. This is NOT an Official Marksheet.", 15, 278);
+                doc.text("4. This is only for reference and Self-Calculation Purposes.", 15, 285);
+
 
                 doc.save(`${d.studentName} - Marksheet.pdf`);
             };
         } else {
-            console.error("jsPDF not loaded or marksheet data not available!");
+            alert("Oops! Something went wrong. We apologize for the inconvenience.");
         }
     });
 });
