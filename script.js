@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (total1 > 2000 || total2 > 2000) {
             error.textContent = "Ist/IInd Year Total Marks cannot be greater than 2000!";
             return;
-        } else if (total5 > 1100 || total5 > 1100) {
+        } else if (total5 > 1100 || total6 > 1100) {
             error.textContent = "5th/6th Semester Total marks cannot be greater than 1100!";
             return;
         }
