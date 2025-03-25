@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const branchName = document.querySelector("#branchName").value;
         const enrollmentNumber = document.querySelector("#enrollmentNumber").value;
         const collegeName = document.querySelector("#collegeName").value;
+        const error = document.querySelector("#error");
 
         const obtained1 = parseInt(document.querySelector("#obtained1").value) || 0;
         const total1 = parseInt(document.querySelector("#total1").value) || 1;
@@ -39,7 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const total6 = parseInt(document.querySelector("#total6").value) || 1;
 
         if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
-            alert("Obtained marks cannot be greater than total marks!");
+            error.textContent = "Obtained marks cannot be greater than total marks!";
+            return;
+        }
+
+        if (total1 < 500 || total2 < 500 || total5 < 500 || total6 < 500) {
+            error.textContent = "Total marks cannot be less than 500!";
             return;
         }
 
