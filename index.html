@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BTEUP Marksheet Generator</title>
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="style.css" />
+    <title>BTEUP Final Percentage Calculator</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,24 +15,32 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
     <!-- jsPDF Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- jsPDF AutoTable Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
 </head>
 
-<body class="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex justify-center items-center my-6 mx-3">
+<body
+    class="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex justify-center items-center my-6 mx-3 font-[Poppins]">
     <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl p-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-2 flex items-center justify-center">
             BTEUP
         </h1>
         <h1 class="text-xl font-bold text-center text-gray-800 mb-6 flex items-center justify-center">
-            Final Marksheet Calculator
+            Final Percentage Calculator
         </h1>
 
-        <form class="space-y-6">
+        <form class="space-y-6" name="submit-to-google-sheet">
             <!-- Personal Details Section -->
             <fieldset class="border border-gray-300 p-5 rounded-lg bg-gray-100">
                 <legend class="text-lg font-semibold text-gray-800">
@@ -43,41 +50,42 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     <div class="relative">
                         <i class="fas fa-user absolute left-3 top-3 text-gray-500"></i>
-                        <input type="text" id="studentName" placeholder="Student Name" required
+                        <input type="text" id="studentName" placeholder="Student Name" name="Name" required
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
 
                     <div class="relative">
                         <i class="fas fa-code-branch absolute left-3 top-3 text-gray-500"></i>
-                        <input type="text" id="branchName" placeholder="Branch Name" required
+                        <input type="text" id="branchName" placeholder="Branch Name" name="BranchName" required
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
 
                     <div class="relative">
                         <i class="fas fa-id-card absolute left-3 top-3 text-gray-500"></i>
-                        <input type="text" id="enrollmentNumber" placeholder="Enrollment Number" required
+                        <input type="text" id="enrollmentNumber" placeholder="Enrollment Number" name="EnrollmentNumber"
+                            required
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
 
                     <div class="relative">
                         <i class="fas fa-university absolute left-3 top-3 text-gray-500"></i>
-                        <input type="text" id="collegeName" placeholder="College Name" required
+                        <input type="text" id="collegeName" placeholder="College Name" name="CollegeName" required
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
             </fieldset>
 
             <!-- Marks Section -->
-            <fieldset class="border border-gray-300 p-5 rounded-lg bg-gray-100">
+            <fieldset class="border border-gray-400 p-5 rounded-lg bg-gray-100">
                 <legend class="text-lg font-semibold text-gray-800">Marks</legend>
 
                 <div class="space-y-5 mt-4">
                     <div>
                         <h3 class="text-md font-semibold text-gray-700">1st Year</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="number" id="obtained1" placeholder="Obtained Marks" required
-                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                            <input type="number" id="total1" placeholder="Total Marks" required
+                            <input type="number" id="obtained1" placeholder="Obtained Marks" name="Obtained1st" required
+                                class="w-full px-3 py-2 border border-gray-800 rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total1" placeholder="Total Marks" name="Total1st" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         </div>
                     </div>
@@ -85,9 +93,9 @@
                     <div>
                         <h3 class="text-md font-semibold text-gray-700">2nd Year</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="number" id="obtained2" placeholder="Obtained Marks" required
-                                class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                            <input type="number" id="total2" placeholder="Total Marks" required
+                            <input type="number" id="obtained2" placeholder="Obtained Marks" name="Obtained2nd" required
+                                class="w-full px-3 py-2 border border-gray-800 rounded-md focus:ring-2 focus:ring-blue-500" />
+                            <input type="number" id="total2" placeholder="Total Marks" name="Total2nd" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         </div>
                     </div>
@@ -95,9 +103,9 @@
                     <div>
                         <h3 class="text-md font-semibold text-gray-700">5th Semester</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="number" id="obtained5" placeholder="Obtained Marks" required
+                            <input type="number" id="obtained5" placeholder="Obtained Marks" name="Obtained5th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                            <input type="number" id="total5" placeholder="Total Marks" required
+                            <input type="number" id="total5" placeholder="Total Marks" name="Total5th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         </div>
                     </div>
@@ -105,9 +113,9 @@
                     <div>
                         <h3 class="text-md font-semibold text-gray-700">6th Semester</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="number" id="obtained6" placeholder="Obtained Marks" required
+                            <input type="number" id="obtained6" placeholder="Obtained Marks" name="Obtained6th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-                            <input type="number" id="total6" placeholder="Total Marks" required
+                            <input type="number" id="total6" placeholder="Total Marks" name="Total6th" required
                                 class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
                         </div>
                     </div>
@@ -115,7 +123,7 @@
             </fieldset>
 
             <!-- Submit Button -->
-            <button id="submit"
+            <button id="submit" type="submit"
                 class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-md font-bold text-lg hover:shadow-lg transition hover:scale-105">
                 Calculate Percentage
             </button>
@@ -144,16 +152,18 @@
                     class="text-black text-lg hover:text-blue-800">
                     <i class="fab fa-github"></i>
                 </a>
-                <!-- Twitter -->
+                <!-- X -->
                 <a href="https://x.com/hardikfgp" target="_blank" class="text-black text-lg hover:text-blue-800">
                     <i class="fab fa-x-twitter"></i>
                 </a>
             </div>
         </div>
+
     </div>
 
     <!-- Result Modal -->
-    <div id="resultModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+    <div id="resultModal"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
             <div id="modalContent" class="text-gray-800"></div>
             <div class="flex justify-between mt-4">
