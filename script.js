@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (enrollmentNumber.length < 15) {
-            error.textContent = "Enrollment Number must be 15 digits.";
+            error.textContent = "Enrollment Number must be 15 digits long.";
             return;
         } else if (obtained1 > total1 || obtained2 > total2 || obtained5 > total5 || obtained6 > total6) {
             error.textContent = "Obtained marks cannot be greater than total marks!";
