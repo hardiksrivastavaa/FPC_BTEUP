@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 doc.setFont("times", "bold");
                 doc.setFontSize(19);
-                doc.text("Marksheet", 80, 125);
+                doc.text("Marksheet", 90, 125);
 
                 const tableData = [
                     ["Year/Semester", "Obtained Marks", "Total Marks", "Percentage"],
