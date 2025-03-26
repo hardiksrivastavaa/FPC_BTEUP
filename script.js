@@ -4,14 +4,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.querySelector("#closeModal");
     const downloadPdfBtn = document.querySelector("#downloadPdf");
     const resultModal = document.querySelector("#resultModal");
-    let form = document.querySelector("#marksheetForm");
+    let formData = document.querySelector("#marksheetForm");
 
-    // Adding event listener to form submit
-    form.addEventListener("submit", getPercentages);
+    // Adding event listener to formData submit
+    formData.addEventListener("submit", getPercentages);
 
     // Helper function to calculate the percentage
     function calculatePercentage(obtained, total) {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
+    }
+
+    // Send data to Google Sheets helper function
+    function sendDataToGoogleSheet(formData) {
+        const scriptURL = "https://script.google.com/macros/s/AKfycbw9kYviubu1HqB9rz6ek0LM0Fk1FelpqGrrkOaR4-m6C-JYHmGxEinr4aDbJ5ANI9_E/exec"; // Replace with actual Google Apps Script URL
+
+        fetch(scriptURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        })
+            .then(response => response.text())
+            .then(data => console.log("Google Sheet Response:", data))
+            .catch(error => console.error("Error:", error));
     }
 
     // Function to calculate and display student percentages
@@ -39,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         error.textContent = "";
 
         // Validation: Check enrollment number length
-        if (enrollmentNumber.length < 15 || enrollmentNumber.length > 15) {
+        if (enrollmentNumber.length !== 15) {
             error.textContent = "Enter a Valid Enrollment Number.";
             return;
         }
@@ -112,6 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
+        // Send data to Google Sheets
+        sendDataToGoogleSheet(formData);
+
         // Display the result in modal
         document.querySelector("#modalContent").innerHTML = `
             <h2 class="text-xl font-bold">Marksheet Details</h2>
@@ -164,9 +181,9 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    // Close the modal and reset the form
+    // Close the modal and reset the formData
     closeModalBtn.addEventListener("click", function () {
-        form.reset();
+        formData.reset();
         resultModal.classList.add("hidden");
     });
 
