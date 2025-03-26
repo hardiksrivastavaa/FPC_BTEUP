@@ -4,30 +4,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.querySelector("#closeModal");
     const downloadPdfBtn = document.querySelector("#downloadPdf");
     const resultModal = document.querySelector("#resultModal");
-    let formData = document.querySelector("#marksheetForm");
+    let form = document.querySelector("#marksheetForm");
 
-    // Adding event listener to formData submit
-    formData.addEventListener("submit", getPercentages);
+    // Adding event listener to form submit
+    form.addEventListener("submit", getPercentages);
 
     // Helper function to calculate the percentage
     function calculatePercentage(obtained, total) {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
-
-
-
-    // Send data to Google Sheets helper function
-    fetch("https://script.google.com/macros/s/AKfycbzcZujootlO90bR__YCn-v9Lle8AEorbW5ZTAxEAFdUl5KHpPRfjt6_vNLaTTN8BVJ4mQ/exec", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => console.log("✅ Success:", data))
-        .catch(error => console.error("❌ Error:", error));
-
 
     // Function to calculate and display student percentages
     function getPercentages(e) {
@@ -127,9 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
-        // Send data to Google Sheets
-        sendDataToGoogleSheet(formData);
-
         // Display the result in modal
         document.querySelector("#modalContent").innerHTML = `
             <h2 class="text-xl font-bold">Marksheet Details</h2>
@@ -182,9 +164,9 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    // Close the modal and reset the formData
+    // Close the modal and reset the form
     closeModalBtn.addEventListener("click", function () {
-        formData.reset();
+        form.reset();
         resultModal.classList.add("hidden");
     });
 
