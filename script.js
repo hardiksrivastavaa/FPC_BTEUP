@@ -44,6 +44,30 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // ✅ Yahan tera Google Sheet submission wala code aayega  
+    var formData = {
+        studentName: studentName,
+        branchName: branchName,
+        collegeName: collegeName
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbw1hUo8nG1ke4KXALa3NFn1Xtg_lIpaHXfF5mYZtfLynqF3DhT4bDA20T0oP6TS66WGQA/exec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("✅ Success:", data);
+        alert("Data added to Google Sheet successfully!");
+    })
+    .catch(error => {
+        console.error("❌ Error:", error);
+        alert("Error adding data to Google Sheet.");
+    });
+
         // Validation: Ensure obtained marks are not greater than total marks
         if (firstYearObtainedMarks > firstYearTotalMarks || secondYearObtainedMarks > secondYearTotalMarks ||
             fifthSemObtainedMarks > fifthSemTotalMarks || sixthSemObtainedMarks > sixthSemTotalMarks) {
