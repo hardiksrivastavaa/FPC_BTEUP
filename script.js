@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     styles: {
                         font: "times",
                         fontSize: 15,
-                        cellPadding: 3,
+                        cellPadding: 2,
                         halign: "center",
                         lineColor: [44, 62, 80],
                         lineWidth: 0.2,
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 doc.setFontSize(16);
                 doc.setTextColor(d.finalPercentage >= 33 ? "green" : "red");
                 doc.setLineHeightFactor(1.4);
-                doc.text(d.message, 20, 227);
+                doc.text(d.message, 20, 214);
 
                 // Add additional notes and disclaimer
                 doc.setTextColor("red");
