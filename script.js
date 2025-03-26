@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     // Selecting necessary DOM elements
     const closeModalBtn = document.querySelector("#closeModal");
     const downloadPdfBtn = document.querySelector("#downloadPdf");
@@ -21,124 +21,65 @@ document.addEventListener("DOMContentLoaded", function () {
         // Fetching student details from input fields
         const studentName = document.querySelector("#studentName").value.trim();
         const branchName = document.querySelector("#branchName").value.trim();
-        const enrollmentNumber = document
-            .querySelector("#enrollmentNumber")
-            .value.trim();
+        const enrollmentNumber = document.querySelector("#enrollmentNumber").value.trim();
         const collegeName = document.querySelector("#collegeName").value.trim();
         const error = document.querySelector("#error");
 
         // Fetching obtained and total marks for different years/semesters
-        const firstYearObtainedMarks = parseInt(
-            document.querySelector("#obtained1").value
-        );
-        const firstYearTotalMarks = parseInt(
-            document.querySelector("#total1").value
-        );
-        const secondYearObtainedMarks = parseInt(
-            document.querySelector("#obtained2").value
-        );
-        const secondYearTotalMarks = parseInt(
-            document.querySelector("#total2").value
-        );
-        const fifthSemObtainedMarks = parseInt(
-            document.querySelector("#obtained5").value
-        );
-        const fifthSemTotalMarks = parseInt(
-            document.querySelector("#total5").value
-        );
-        const sixthSemObtainedMarks = parseInt(
-            document.querySelector("#obtained6").value
-        );
-        const sixthSemTotalMarks = parseInt(
-            document.querySelector("#total6").value
-        );
+        const firstYearObtainedMarks = parseInt(document.querySelector("#obtained1").value);
+        const firstYearTotalMarks = parseInt(document.querySelector("#total1").value);
+        const secondYearObtainedMarks = parseInt(document.querySelector("#obtained2").value);
+        const secondYearTotalMarks = parseInt(document.querySelector("#total2").value);
+        const fifthSemObtainedMarks = parseInt(document.querySelector("#obtained5").value);
+        const fifthSemTotalMarks = parseInt(document.querySelector("#total5").value);
+        const sixthSemObtainedMarks = parseInt(document.querySelector("#obtained6").value);
+        const sixthSemTotalMarks = parseInt(document.querySelector("#total6").value);
 
         // Clear previous error messages
         error.textContent = "";
 
         // Validation: Check enrollment number length
         if (enrollmentNumber.length < 15 || enrollmentNumber.length > 15) {
-            error.textContent = "Enter Valid Enrollment Number.";
-            enrollmentNumber.classList.add("text-red-800");
+            error.textContent = "Enter a Valid Enrollment Number.";
             return;
         }
 
         // Validation: Ensure obtained marks are not greater than total marks
-        if (
-            firstYearObtainedMarks > firstYearTotalMarks ||
-            secondYearObtainedMarks > secondYearTotalMarks ||
-            fifthSemObtainedMarks > fifthSemTotalMarks ||
-            sixthSemObtainedMarks > sixthSemTotalMarks
-        ) {
-            error.textContent =
-                "Obtained marks must be less or equal to total marks!";
+        if (firstYearObtainedMarks > firstYearTotalMarks || secondYearObtainedMarks > secondYearTotalMarks ||
+            fifthSemObtainedMarks > fifthSemTotalMarks || sixthSemObtainedMarks > sixthSemTotalMarks) {
+            error.textContent = "Obtained marks must be less or equal to total marks!";
             return;
         }
 
         // Validation: Check allowed total marks range for 1st and 2nd year
-        if (
-            firstYearTotalMarks < 1000 ||
-            secondYearTotalMarks < 1000 ||
-            firstYearTotalMarks > 2000 ||
-            secondYearTotalMarks > 2000
-        ) {
-            error.textContent =
-                "Ist/IInd Year Total Marks must be between 1000 and 2000!";
+        if (firstYearTotalMarks < 1000 || secondYearTotalMarks < 1000 || firstYearTotalMarks > 2000 || secondYearTotalMarks > 2000) {
+            error.textContent = "Ist/IInd Year Total Marks must be between 1000 and 2000!";
             return;
         }
 
         // Validation: Check allowed total marks range for 5th and 6th semester
-        if (
-            fifthSemTotalMarks < 500 ||
-            sixthSemTotalMarks < 500 ||
-            fifthSemTotalMarks > 1100 ||
-            sixthSemTotalMarks > 1100
-        ) {
-            error.textContent =
-                "5th/6th Semester Total marks must be between 500 and 1100!";
+        if (fifthSemTotalMarks < 500 || sixthSemTotalMarks < 500 || fifthSemTotalMarks > 1100 || sixthSemTotalMarks > 1100) {
+            error.textContent = "5th/6th Semester Total marks must be between 500 and 1100!";
             return;
         }
 
         // Calculate percentages for different years/semesters
-        const firstYearPercentage = calculatePercentage(
-            firstYearObtainedMarks,
-            firstYearTotalMarks
-        );
-        const secondYearPercentage = calculatePercentage(
-            secondYearObtainedMarks,
-            secondYearTotalMarks
-        );
-        const fifthSemPercentage = calculatePercentage(
-            fifthSemObtainedMarks,
-            fifthSemTotalMarks
-        );
-        const sixthSemPercentage = calculatePercentage(
-            sixthSemObtainedMarks,
-            sixthSemTotalMarks
-        );
-        const thirdYearObtainedMarks =
-            fifthSemObtainedMarks + sixthSemObtainedMarks;
+
+        const firstYearPercentage = calculatePercentage(firstYearObtainedMarks, firstYearTotalMarks);
+        const secondYearPercentage = calculatePercentage(secondYearObtainedMarks, secondYearTotalMarks);
+
+        const fifthSemPercentage = calculatePercentage(fifthSemObtainedMarks, fifthSemTotalMarks);
+        const sixthSemPercentage = calculatePercentage(sixthSemObtainedMarks, sixthSemTotalMarks);
+
+        const thirdYearObtainedMarks = fifthSemObtainedMarks + sixthSemObtainedMarks;
         const thirdYearTotalMarks = fifthSemTotalMarks + sixthSemTotalMarks;
-        const thirdYearPercentage = calculatePercentage(
-            thirdYearObtainedMarks,
-            thirdYearTotalMarks
-        );
+        const thirdYearPercentage = calculatePercentage(thirdYearObtainedMarks, thirdYearTotalMarks);
 
         // Calculate final percentage based on weightage
-        const finalObtainedMarks = Math.round(
-            firstYearObtainedMarks * 0.3 +
-            secondYearObtainedMarks * 0.7 +
-            thirdYearObtainedMarks
-        );
-        const finalTotalMarks = Math.round(
-            firstYearTotalMarks * 0.3 +
-            secondYearTotalMarks * 0.7 +
-            thirdYearTotalMarks
-        );
-        const finalPercentage = calculatePercentage(
-            finalObtainedMarks,
-            finalTotalMarks
-        );
+
+        const finalObtainedMarks = Math.round(firstYearObtainedMarks * 0.3 + secondYearObtainedMarks * 0.7 + thirdYearObtainedMarks);
+        const finalTotalMarks = Math.round(firstYearTotalMarks * 0.3 + secondYearTotalMarks * 0.7 + thirdYearTotalMarks);
+        const finalPercentage = calculatePercentage(finalObtainedMarks, finalTotalMarks);
 
         // Determine grade and result based on final percentage
         const gradeMapping = [
