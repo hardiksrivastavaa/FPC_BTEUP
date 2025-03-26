@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch(scriptURL, {
             method: "POST",
+            mode: "no-cors",  // ✅ CORS Issue Avoid Karne Ke Liye
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         })
