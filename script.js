@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Send data to Google Sheets helper function
     function sendDataToGoogleSheet(formData) {
-        const scriptURL = "https://script.google.com/macros/s/AKfycbzKs9I2F8Ge58Mgut4um1f1tYI3RmP0q6kTXPCMU0l5pfW1a4KsyWCLWrRBlLC-A0F3BA/exec"; 
+        const scriptURL = "https://script.google.com/macros/s/AKfycbyc4j7kF1Xarh3uClKO8wX-EpTR0Uc839dd7uegyuzsX7H6xd03rt35OFCOE2sGkpr5YA/exec"; 
     
         fetch(scriptURL, {
             method: "POST",
