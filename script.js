@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Send data to Google Sheets helper function
     function sendDataToGoogleSheet(formData) {
-        const scriptURL = "https://script.google.com/macros/s/AKfycbw9kYviubu1HqB9rz6ek0LM0Fk1FelpqGrrkOaR4-m6C-JYHmGxEinr4aDbJ5ANI9_E/exec"; // Replace with actual Google Apps Script URL
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxzcioE290wrSl7twleo-patZOkftSXHGSy_R1rOTb5X0ZZxGL9h0U2HmlGBfVXluW7Lg/exec"; // Replace with actual Google Apps Script URL
 
+        
         fetch(scriptURL, {
             method: "POST",
-            mode: "no-cors",  // ✅ CORS Issue Avoid Karne Ke Liye
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         })
