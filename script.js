@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         e.preventDefault();
 
-        const studentName = document.querySelector("#studentName").value;
-        const branchName = document.querySelector("#branchName").value;
-        const enrollmentNumber = document.querySelector("#enrollmentNumber").value;
-        const collegeName = document.querySelector("#collegeName").value;
+        const studentName = document.querySelector("#studentName").value.trim();
+        const branchName = document.querySelector("#branchName").value.trim();
+        const enrollmentNumber = document.querySelector("#enrollmentNumber").value.trim();
+        const collegeName = document.querySelector("#collegeName").value.trim();
         const error = document.querySelector("#error");
 
 
@@ -79,30 +79,30 @@ document.addEventListener("DOMContentLoaded", function () {
         const thirdYearTotal = total5 + total6;
         const thirdYearPercentage = calculatePercentage(thirdYearObtained, thirdYearTotal);
 
-        const FinalObtainedMarks = Math.round((obtained1 * 0.3) + (obtained2 * 0.7) + thirdYearObtained);
-        const FinalTotalMarks = Math.round((total1 * 0.3) + (total2 * 0.7) + thirdYearTotal);
-        const FinalPercentage = calculatePercentage(FinalObtainedMarks, FinalTotalMarks);
+        const finalObtainedMarks = Math.round((obtained1 * 0.3) + (obtained2 * 0.7) + thirdYearObtained);
+        const finalTotalMarks = Math.round((total1 * 0.3) + (total2 * 0.7) + thirdYearTotal);
+        const finalPercentage = calculatePercentage(finalObtainedMarks, finalTotalMarks);
 
         // Determine grade and message based on final percentage
         let grade = "";
         let message = "";
 
-        if (FinalPercentage >= 60) {
+        if (finalPercentage >= 60) {
             grade = "First Division";
-            message = `Congratulations ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou achieved First Division. Great job!`;
-        } else if (FinalPercentage >= 45) {
+            message = `Congratulations ${studentName}, your Final Percentage is ${finalPercentage}%.\nYou achieved First Division. Great job!`;
+        } else if (finalPercentage >= 45) {
             grade = "Second Division";
-            message = `Well done ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou secured Second Division. Keep pushing forward!`;
-        } else if (FinalPercentage >= 33) {
+            message = `Well done ${studentName}, your Final Percentage is ${finalPercentage}%.\nYou secured Second Division. Keep pushing forward!`;
+        } else if (finalPercentage >= 33) {
             grade = "Third Division";
-            message = `Good effort ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou passed with Third Division. Try to improve further!`;
+            message = `Good effort ${studentName}, your Final Percentage is ${finalPercentage}%.\nYou passed with Third Division. Try to improve further!`;
         } else {
             grade = "Fail";
-            message = `Sorry ${studentName}, your Final Percentage is ${FinalPercentage}%.\nYou didn't pass. Stay strong and try again!`;
+            message = `Sorry ${studentName}, your Final Percentage is ${finalPercentage}%.\nYou didn't pass. Stay strong and try again!`;
         }
 
 
-        const finalResult = FinalPercentage >= 33 ? "PASSED" : "FAILED";
+        const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
         document.querySelector("#modalContent").innerHTML = `
             <h2 class="text-xl font-bold">Marksheet Details</h2>
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>2nd Year Percentage:</strong> ${secondYearPercentage}%</p>
             <p><strong>3rd Year Percentage:</strong> ${thirdYearPercentage}%</p>
             <hr class="my-2">
-            <p><strong>Final Percentage:</strong> ${FinalPercentage}%</p>
+            <p><strong>Final Percentage:</strong> ${finalPercentage}%</p>
             <p class="text-lg font-bold mt-2 ${finalResult === 'PASSED' ? 'text-green-600' : 'text-red-600'}">
                 Final Result: ${finalResult}
             </p>
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
             obtained2, total2, secondYearPercentage,
             obtained5, total5, obtained6, total6,
             thirdYearObtained, thirdYearTotal, thirdYearPercentage,
-            FinalObtainedMarks, FinalTotalMarks, FinalPercentage,
+            finalObtainedMarks, finalTotalMarks, finalPercentage,
             finalResult, grade, message
         };
     }
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ["5th Semester", d.obtained5, d.total5, calculatePercentage(d.obtained5, d.total5) + "%"],
                     ["6th Semester", d.obtained6, d.total6, calculatePercentage(d.obtained6, d.total6) + "%"],
                     ["3rd Year", d.thirdYearObtained, d.thirdYearTotal, d.thirdYearPercentage + "%"],
-                    ["Grand Total", d.FinalObtainedMarks, d.FinalTotalMarks, d.FinalPercentage + "%"],
+                    ["Grand Total", d.finalObtainedMarks, d.finalTotalMarks, d.finalPercentage + "%"],
                 ];
 
 
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 doc.setFontSize(16);
-                doc.setTextColor(d.FinalPercentage >= 33 ? "green" : "red");
+                doc.setTextColor(d.finalPercentage >= 33 ? "green" : "red");
                 doc.setLineHeightFactor(1.4); // Ensures proper spacing
 
                 // Print the personalized message with proper alignment
