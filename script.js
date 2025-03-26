@@ -101,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
             message = `Sorry ${studentName}, your Final Percentage is ${finalPercentage}%.\nYou didn't pass. Stay strong and try again!`;
         }
 
-
         const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
         document.querySelector("#modalContent").innerHTML = `
@@ -147,12 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const img = new Image();
             img.src = "bteup.png";
             img.onload = function () {
-                // 🏫 Logo + Title Formatting
-                doc.addImage(img, "PNG", 75, 5, 60, 50); // Bigger logo (W: 60, H: 30)
+           
+                doc.addImage(img, "PNG", 75, 5, 60, 50); 
 
                 doc.setFont("times", "bold");
                 doc.setFontSize(20);
-                doc.text("BOARD OF TECHNICAL EDUCATION UP", 35, 70); // Pushed down for spacing
+                doc.text("BOARD OF TECHNICAL EDUCATION UP", 35, 70);
 
                 const d = window.marksheetData;
                 doc.setFontSize(16);
@@ -180,23 +179,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     startY: 132,
                     head: [[
                         "Year/Semester", "Obtained Marks", "Total Marks", "Percentage"
-                    ]], // Ensure headers are in one line
+                    ]], 
                     body: tableData.slice(1),
                     theme: "grid",
                     styles: {
                         font: "times",
-                        fontSize: 15, // Standard readable font
-                        cellPadding: 3, // More padding for spacing
+                        fontSize: 15, 
+                        cellPadding: 3, 
                         halign: "center",
-                        lineColor: [44, 62, 80], // Dark gray border
-                        lineWidth: 0.2, // Thin borders
-                        cellWidth: "wrap", // Auto-wrap content
+                        lineColor: [44, 62, 80], 
+                        lineWidth: 0.2, 
+                        cellWidth: "wrap", 
                     },
                     headStyles: {
                         fillColor: [41, 128, 185],
                         textColor: [255, 255, 255],
                         fontStyle: "bold",
-                        fontSize: 15, // Make header distinct
+                        fontSize: 15, 
                         halign: "center",
                     },
                     alternateRowStyles: {
@@ -208,12 +207,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 doc.setFontSize(16);
                 doc.setTextColor(d.finalPercentage >= 33 ? "green" : "red");
-                doc.setLineHeightFactor(1.4); // Ensures proper spacing
+                doc.setLineHeightFactor(1.4); 
 
-                // Print the personalized message with proper alignment
+                
                 doc.text(d.message, 20, 227);
 
-                //Added Important Points
+                
                 doc.setTextColor("red");
                 doc.setFontSize(12);
                 doc.text("Note : ", 15, 257);
