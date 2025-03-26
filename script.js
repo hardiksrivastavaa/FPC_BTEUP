@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
 
-    // Function to get Percentages
+    // Function to get Percentages of Student
 
     function getPercentages(e) {
 
