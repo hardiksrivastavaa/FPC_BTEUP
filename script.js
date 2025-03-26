@@ -14,21 +14,22 @@ document.addEventListener("DOMContentLoaded", function () {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
 
+    
+
     // Send data to Google Sheets helper function
     function sendDataToGoogleSheet(formData) {
-        const scriptURL = "https://script.google.com/macros/s/AKfycbxzcioE290wrSl7twleo-patZOkftSXHGSy_R1rOTb5X0ZZxGL9h0U2HmlGBfVXluW7Lg/exec"; // Replace with actual Google Apps Script URL
-
-        
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzKs9I2F8Ge58Mgut4um1f1tYI3RmP0q6kTXPCMU0l5pfW1a4KsyWCLWrRBlLC-A0F3BA/exec"; 
+    
         fetch(scriptURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         })
-            .then(response => response.text())
-            .then(data => console.log("Google Sheet Response:", data))
-            .catch(error => console.error("Error:", error));
+        .then(response => response.json())  // ✅ JSON Response Parse Karo
+        .then(data => console.log("Google Sheet Response:", data))
+        .catch(error => console.error("Error:", error));
     }
-
+    
     // Function to calculate and display student percentages
     function getPercentages(e) {
         e.preventDefault();
