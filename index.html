@@ -53,6 +53,18 @@
 
                     <div class="relative">
                         <i class="fas fa-graduation-cap absolute left-3 top-3 text-gray-500"></i>
+                        <select
+                            class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="diplomaType" required id="diplomaType">
+                            <option value="">Select Diploma Type</option>
+                            <option value="threeYears">3 Years Diploma</option>
+                            <option value="twoYears">2 Years Diploma (Lateral Entry)</option>
+                        </select>
+                    </div>
+
+                
+                    <div class="relative">
+                        <i class="fas fa-graduation-cap absolute left-3 top-3 text-gray-500"></i>
                         <input type="text" id="branchName" placeholder="Branch Name" name="BranchName" required
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
@@ -81,7 +93,7 @@
                 <p class="text-bold text-xl text-red-800 text-center my-1" id="error"></p>
 
                 <div class="space-y-5 mt-4">
-                    <div>
+                    <div id="yearIstMarks">
                         <h3 class="text-md font-semibold text-gray-700 mb-2">1st Year</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <input type="number" id="obtained1" placeholder="Obtained" name="Obtained1st" required

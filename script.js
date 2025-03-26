@@ -1,33 +1,53 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    // Selecting necessary DOM elements
     const closeModalBtn = document.querySelector("#closeModal");
-    const downloadPdfBtn = document.querySelector("#downloadPdf");
     const resultModal = document.querySelector("#resultModal");
-    let form = document.querySelector("#marksheetForm");
+    const downloadPdfBtn = document.querySelector("#downloadPdf");
+    const form = document.querySelector("#marksheetForm");
+    const diplomaType = document.querySelector("#diplomaType");
+    const yearIstMarks = document.querySelector("#yearIstMarks");
+    const firstYearObtained = document.querySelector("#obtained1");
+    const firstYearTotal = document.querySelector("#total1");
+
+    // Event listener for dropdown change
+    diplomaType.addEventListener("change", function () {
+        if (this.value === "twoYears") {
+            yearIstMarks.classList.add("hidden"); // Hide 1st Year Marks
+            firstYearObtained.removeAttribute("required");
+            firstYearTotal.removeAttribute("required");
+        } else {
+            yearIstMarks.classList.remove("hidden"); // Show it back
+            firstYearObtained.setAttribute("required", "true");
+            firstYearTotal.setAttribute("required", "true");
+        }
+    });
 
     // Adding event listener to form submit
     form.addEventListener("submit", getPercentages);
 
-    // Helper function to calculate the percentage
     function calculatePercentage(obtained, total) {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
 
-    // Function to calculate and display student percentages
     function getPercentages(e) {
         e.preventDefault();
 
-        // Fetching student details from input fields
         const studentName = document.querySelector("#studentName").value.trim();
         const branchName = document.querySelector("#branchName").value.trim();
         const enrollmentNumber = document.querySelector("#enrollmentNumber").value.trim();
         const collegeName = document.querySelector("#collegeName").value.trim();
         const error = document.querySelector("#error");
 
-        // Fetching obtained and total marks for different years/semesters
-        const firstYearObtainedMarks = parseInt(document.querySelector("#obtained1").value);
-        const firstYearTotalMarks = parseInt(document.querySelector("#total1").value);
+        // ✅ Get selected diploma type value
+        const selectedDiploma = diplomaType.value;
+
+        let firstYearObtainedMarks = "NA";
+        let firstYearTotalMarks = "NA";
+
+        if (selectedDiploma === "threeYears") {
+            firstYearObtainedMarks = parseInt(document.querySelector("#obtained1").value);
+            firstYearTotalMarks = parseInt(document.querySelector("#total1").value);
+        }
+
         const secondYearObtainedMarks = parseInt(document.querySelector("#obtained2").value);
         const secondYearTotalMarks = parseInt(document.querySelector("#total2").value);
         const fifthSemObtainedMarks = parseInt(document.querySelector("#obtained5").value);
@@ -63,11 +83,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Calculate percentages for different years/semesters
 
-        const firstYearPercentage = calculatePercentage(firstYearObtainedMarks, firstYearTotalMarks);
+        // ✅ Calculate percentages safely
+        const firstYearPercentage = selectedDiploma === "threeYears" ? calculatePercentage(firstYearObtainedMarks, firstYearTotalMarks) : "N/A";
         const secondYearPercentage = calculatePercentage(secondYearObtainedMarks, secondYearTotalMarks);
-
         const fifthSemPercentage = calculatePercentage(fifthSemObtainedMarks, fifthSemTotalMarks);
         const sixthSemPercentage = calculatePercentage(sixthSemObtainedMarks, sixthSemTotalMarks);
 
@@ -75,11 +94,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const thirdYearTotalMarks = fifthSemTotalMarks + sixthSemTotalMarks;
         const thirdYearPercentage = calculatePercentage(thirdYearObtainedMarks, thirdYearTotalMarks);
 
-        // Calculate final percentage based on weightage
+        // ✅ Handle final calculation properly
+        const finalObtainedMarks = Math.round(
+            (selectedDiploma === "threeYears" ? firstYearObtainedMarks * 0.3 : 0) +
+            secondYearObtainedMarks * 0.7 +
+            thirdYearObtainedMarks
+        );
 
-        const finalObtainedMarks = Math.round(firstYearObtainedMarks * 0.3 + secondYearObtainedMarks * 0.7 + thirdYearObtainedMarks);
-        const finalTotalMarks = Math.round(firstYearTotalMarks * 0.3 + secondYearTotalMarks * 0.7 + thirdYearTotalMarks);
+        const finalTotalMarks = Math.round(
+            (selectedDiploma === "threeYears" ? firstYearTotalMarks * 0.3 : 0) +
+            secondYearTotalMarks * 0.7 +
+            thirdYearTotalMarks
+        );
+
         const finalPercentage = calculatePercentage(finalObtainedMarks, finalTotalMarks);
+        const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
         // Determine grade and result based on final percentage
         const gradeMapping = [
@@ -110,9 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
             (g) => finalPercentage >= g.min
         );
 
-        const finalResult = finalPercentage >= 33 ? "PASSED" : "FAILED";
 
-        // Display the result in modal
+        // ✅ Update Modal Content
         document.querySelector("#modalContent").innerHTML = `
             <h2 class="text-xl font-bold">Marksheet Details</h2>
             <p><strong>Student Name:</strong> ${studentName}</p>
@@ -120,18 +148,17 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>Enrollment No:</strong> ${enrollmentNumber}</p>
             <p><strong>College Name:</strong> ${collegeName}</p>
             <hr class="my-2">
-            <p><strong>1st Year Percentage:</strong> ${firstYearPercentage}%</p>
+            <p><strong>1st Year Percentage:</strong> ${selectedDiploma === "threeYears" ? firstYearPercentage + "%" : "NA"}</p>
             <p><strong>2nd Year Percentage:</strong> ${secondYearPercentage}%</p>
             <p><strong>3rd Year Percentage:</strong> ${thirdYearPercentage}%</p>
             <hr class="my-2">
             <p><strong>Final Percentage:</strong> ${finalPercentage}%</p>
-            <p class="text-lg font-bold mt-2 ${finalResult === "PASSED" ? "text-green-600" : "text-red-600"
-            }">
+            <p class="text-lg font-bold mt-2 ${finalResult === "PASSED" ? "text-green-600" : "text-red-600"}">
                 Final Result: ${finalResult}
             </p>
         `;
 
-        // Show the result modal
+        // ✅ Show the result modal
         resultModal.classList.remove("hidden");
 
         // Store marksheet data for PDF generation
@@ -140,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
             branchName,
             enrollmentNumber,
             collegeName,
+            selectedDiploma,
             firstYearObtainedMarks,
             firstYearTotalMarks,
             firstYearPercentage,
@@ -164,10 +192,11 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    // Close the modal and reset the form
+    // ✅ Close modal and reset form
     closeModalBtn.addEventListener("click", function () {
         form.reset();
         resultModal.classList.add("hidden");
+        yearIstMarks.classList.remove("hidden"); // Reset visibility
     });
 
     // Event listener for downloading PDF marksheet
@@ -208,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         "1st Year",
                         d.firstYearObtainedMarks,
                         d.firstYearTotalMarks,
-                        d.firstYearPercentage + "%",
+                        d.selectedDiploma === "threeYears" ? d.firstYearPercentage + "%" : "NA",
                     ],
                     [
                         "2nd Year",
@@ -220,15 +249,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         "5th Semester",
                         d.fifthSemObtainedMarks,
                         d.fifthSemTotalMarks,
-                        calculatePercentage(d.fifthSemObtainedMarks, d.fifthSemTotalMarks) +
-                        "%",
+                        d.fifthSemPercentage + "%",
                     ],
                     [
                         "6th Semester",
                         d.sixthSemObtainedMarks,
                         d.sixthSemTotalMarks,
-                        calculatePercentage(d.sixthSemObtainedMarks, d.sixthSemTotalMarks) +
-                        "%",
+                        d.sixthSemPercentage + "%",
                     ],
                     [
                         "3rd Year",
@@ -311,3 +338,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
