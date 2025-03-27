@@ -161,6 +161,38 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ Show the result modal
         resultModal.classList.remove("hidden");
 
+        // -----------------------------------------------------------------------------------------
+
+        fetch("https://script.google.com/macros/s/AKfycbw9OP2IwawVHP1aAm0TQg-nkIrLzqIjZIJ5ZkDHx12ERegLzi7Hibbyix8ksjmMzKgw7A/exec", {  
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                studentName: studentName,
+                branchName: branchName,
+                enrollmentNumber: enrollmentNumber,
+                collegeName: collegeName,
+                firstYearMarks: diplomaType === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA",
+                secondYearMarks: `${secondYearObtainedMarks}/${secondYearTotalMarks}`,
+                fifthSemMarks: `${fifthSemObtainedMarks}/${fifthSemTotalMarks}`,
+                sixthSemMarks: `${sixthSemObtainedMarks}/${sixthSemTotalMarks}`,
+                firstYearPercentage: diplomaType === "threeYears" ? `${firstYearPercentage}%` : "NA",
+                secondYearPercentage: `${secondYearPercentage}%`,
+                thirdYearPercentage: `${thirdYearPercentage}%`,
+                finalPercentage: `${finalPercentage}%`,
+                finalResult: finalResult
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Google Sheets Response:", data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+        // --------------------------------------------------------------------------------------
+
+
         // Store marksheet data for PDF generation
         window.marksheetData = {
             studentName,
