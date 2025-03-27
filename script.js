@@ -168,15 +168,17 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("Branch Name", branchName);
         formData.append("Enrollment No", enrollmentNumber);
         formData.append("College Name", collegeName);
-        formData.append("1st Year Marks", diplomaType === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA");
+        formData.append("Diploma Type", selectedDiploma);
+        formData.append("1st Year Marks", selectedDiploma === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA");
         formData.append("2nd Year Marks", `${secondYearObtainedMarks}/${secondYearTotalMarks}`);
         formData.append("5th Sem Marks", `${fifthSemObtainedMarks}/${fifthSemTotalMarks}`);
         formData.append("6th Sem Marks", `${sixthSemObtainedMarks}/${sixthSemTotalMarks}`);
-        formData.append("1st Year Percentage", diplomaType === "threeYears" ? firstYearPercentage + "%" : "NA");
+        formData.append("1st Year Percentage", selectedDiploma === "threeYears" ? firstYearPercentage + "%" : "NA");
         formData.append("2nd Year Percentage", secondYearPercentage + "%");
         formData.append("3rd Year Percentage", thirdYearPercentage + "%");
         formData.append("Final Percentage", finalPercentage + "%");
         formData.append("Final Result", finalResult);
+        formData.append("Grade", grade);
 
         fetch("https://usebasin.com/f/38eb240409d5", {
             method: "POST",
