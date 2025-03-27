@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ Show the result modal
         resultModal.classList.remove("hidden");
 
-        // -----------------------------------------------------------------------------------------
+        // Form Data Send to Basin
 
         const formData = new FormData();
         formData.append("Student Name", studentName);
