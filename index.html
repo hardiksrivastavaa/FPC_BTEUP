@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- SEO Meta Tags -->
     <title>BTEUP Final Percentage Calculator - Instant & Accurate</title>
     <meta name="description"
@@ -29,21 +29,17 @@
     <meta name="twitter:image" content="https://bteupfpc.vercel.app/favicon.png" />
 
     <!-- Favicon -->
-    
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
 
     <!-- Tailwind CSS -->
-
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Google Fonts -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -51,11 +47,9 @@
         rel="stylesheet" />
 
     <!-- jsPDF Library -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- jsPDF AutoTable Plugin -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 
@@ -66,7 +60,9 @@
             BTEUP<span class="text-xl font-bold mt-1 text-blue-800">Final Percentage Calculator</span>
         </h1>
 
+        <!-- Final Percentage Calculator Form -->
         <form class="space-y-6" id="marksheetForm">
+
             <!-- Personal Details Section -->
             <fieldset class="border border-gray-300 p-5 rounded-2xl bg-gray-100">
                 <legend class="text-lg font-semibold text-gray-800">
@@ -91,7 +87,6 @@
                         </select>
                     </div>
 
-
                     <div class="relative">
                         <i class="fas fa-graduation-cap absolute left-3 top-3 text-gray-500"></i>
                         <input type="text" id="branchName" placeholder="Branch Name" name="BranchName" required
@@ -111,9 +106,10 @@
                             class="w-full pl-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
+
             </fieldset>
 
-            <!-- Marks Section -->
+            <!-- Academic Score Section -->
             <fieldset class="border border-gray-300 p-5 rounded-2xl bg-gray-100">
                 <legend class="text-lg font-semibold text-gray-800">
                     Academic Score
@@ -173,6 +169,7 @@
                 class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-md font-bold text-lg hover:shadow-lg transition hover:scale-105">
                 Calculate Percentage
             </button>
+
         </form>
 
         <!-- Footer - About Developer -->
