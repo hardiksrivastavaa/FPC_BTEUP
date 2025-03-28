@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Adding event listener to form submit
     form.addEventListener("submit", getPercentages);
 
+
     function calculatePercentage(obtained, total) {
         return total === 0 ? "0.00" : ((obtained / total) * 100).toFixed(2);
     }
@@ -161,35 +162,31 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ Show the result modal
         resultModal.classList.remove("hidden");
 
-        // Form Data Send to Basin
+        // Form Data Send to Google Sheet
+        let formData1 = {
+            "Student Name": studentName,
+            "1st Year Marks": selectedDiploma === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA",
+            "2nd Year Marks": `${secondYearObtainedMarks}/${secondYearTotalMarks}`,
+            "5th Sem Marks": `${fifthSemObtainedMarks}/${fifthSemTotalMarks}`,
+            "6th Sem Marks": `${sixthSemObtainedMarks}/${sixthSemTotalMarks}`,
+            "1st Year Percentage": selectedDiploma === "threeYears" ? firstYearPercentage + "%" : "NA",
+            "2nd Year Percentage": secondYearPercentage + "%",
+            "3rd Year Percentage": thirdYearPercentage + "%",
+            "Final Percentage": finalPercentage + "%",
+            "Final Result": finalResult,
+            "Grade": grade,
+            "Branch Name": branchName,
+            "College Name": collegeName,
+            "Enrollment No": enrollmentNumber,
+            "Diploma Type": selectedDiploma,
+        };
 
-        const formData = new FormData();
-        formData.append("Student Name", studentName);
-        formData.append("Branch Name", branchName);
-        formData.append("Enrollment No", enrollmentNumber);
-        formData.append("College Name", collegeName);
-        formData.append("Diploma Type", selectedDiploma);
-        formData.append("1st Year Marks", selectedDiploma === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA");
-        formData.append("2nd Year Marks", `${secondYearObtainedMarks}/${secondYearTotalMarks}`);
-        formData.append("5th Sem Marks", `${fifthSemObtainedMarks}/${fifthSemTotalMarks}`);
-        formData.append("6th Sem Marks", `${sixthSemObtainedMarks}/${sixthSemTotalMarks}`);
-        formData.append("1st Year Percentage", selectedDiploma === "threeYears" ? firstYearPercentage + "%" : "NA");
-        formData.append("2nd Year Percentage", secondYearPercentage + "%");
-        formData.append("3rd Year Percentage", thirdYearPercentage + "%");
-        formData.append("Final Percentage", finalPercentage + "%");
-        formData.append("Final Result", finalResult);
-        formData.append("Grade", grade);
-
-        fetch("https://usebasin.com/f/38eb240409d5", {
+        fetch("https://script.google.com/macros/s/AKfycbxAjwbj3Cu9o6Fcq46Rg-ac1RaVQll2ZPPoc5JRWj25PFyPlBzxuhxd2ad3ACTkyhEq/exec", {
             method: "POST",
-            body: formData, // ✅ Send form data instead of JSON
-        })
-            .then(response => response.text()) // ✅ Basin returns HTML, so use `.text()`
-            .then(data => console.log("Form submitted successfully!"))
-            .catch(error => console.log("Error:", error));
-
-        // --------------------------------------------------------------------------------------
-
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData1)
+        }).catch(error => console.error("Error:", error));
 
         // Store marksheet data for PDF generation
         window.marksheetData = {
