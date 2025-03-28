@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
         resultModal.classList.remove("hidden");
 
         // Form Data Send to Google Sheet
-        let formData1 = {
+        let formData = {
             "Student Name": studentName,
             "1st Year Marks": selectedDiploma === "threeYears" ? `${firstYearObtainedMarks}/${firstYearTotalMarks}` : "NA",
             "2nd Year Marks": `${secondYearObtainedMarks}/${secondYearTotalMarks}`,
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData1)
+            body: JSON.stringify(formData)
         }).catch(error => console.error("Error:", error));
 
         // Store marksheet data for PDF generation
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Fetch student data from window.marksheetData
                 const d = window.marksheetData;
-                
+
                 doc.setFontSize(16);
                 doc.text(`Student Name: ${d.studentName}`, 20, 85);
                 doc.text(`Branch: ${d.branchName}`, 20, 93);
