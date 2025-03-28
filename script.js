@@ -246,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Fetch student data from window.marksheetData
                 const d = window.marksheetData;
+                
                 doc.setFontSize(16);
                 doc.text(`Student Name: ${d.studentName}`, 20, 85);
                 doc.text(`Branch: ${d.branchName}`, 20, 93);
