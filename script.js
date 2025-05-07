@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "Diploma Type": selectedDiploma,
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbxAjwbj3Cu9o6Fcq46Rg-ac1RaVQll2ZPPoc5JRWj25PFyPlBzxuhxd2ad3ACTkyhEq/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbzLIy-OGkytzGVDhVqT8s_-u40PZegIOuc9exbKVfI2m5IBvQ9C9IKOl4oGYnkiQ6K2/exec", {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/json" },
